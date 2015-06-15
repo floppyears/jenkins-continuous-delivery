@@ -14,6 +14,10 @@
 /fingerprints/
 /shelvedProjects/
 /updates/
+/secrets
+/identity.key.enc
+/jenkins.security.RekeySecretAdminMonitor
+/war
 
 # Tools that Hudson manages
 /tools/
