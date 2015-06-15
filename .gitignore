@@ -1,5 +1,5 @@
 # The following ignores...
-# Miscellaneous Hudson litter
+# Miscellaneous Jenkins litter
 *.log
 *.tmp
 *.old
@@ -7,7 +7,7 @@
 *.jar
 *.json
 
-# Generated Hudson state
+# Generated Jenkins state
 /.owner
 /secret.key
 /queue.xml
@@ -19,7 +19,7 @@
 /jenkins.security.RekeySecretAdminMonitor
 /war
 
-# Tools that Hudson manages
+# Tools that Jenkins manages
 /tools/
 
 # Extracted plugins
