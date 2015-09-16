@@ -32,3 +32,6 @@ lastStable
 lastSuccessful
 nextBuildNumber
 modules/
+
+# Credentials
+credentials.xml
