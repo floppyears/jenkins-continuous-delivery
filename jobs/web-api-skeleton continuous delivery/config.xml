@@ -57,18 +57,18 @@ NAME=web-api-skeleton
 KEY=/Users/taylor/.ssh/api-dev
 
 ARCHIVE=`find &quot;$WORKSPACE/build/libs&quot; -name &quot;$NAME-*-*-all.jar&quot;`
-DIR=&quot;/apis/apis/$NAME/&quot;
+DIR=&quot;/apis/apis/$NAME&quot;
 
 # TODO: copy configuration.yaml, run.sh, swagger.yaml, resource.properties, javadocs
 
 # delete old jar files
-ssh -i $KEY $USER@$HOST &quot;rm /apis/apis/$NAME/*.jar&quot;
+ssh -i $KEY $USER@$HOST &quot;rm $DIR/*.jar&quot;
 
 # copy new jar file
 scp -i $KEY &quot;$ARCHIVE&quot; $USER@$HOST:$DIR
 
 # run application
-ssh -i $KEY $USER@$HOST &quot;sh /apis/apis/$NAME/run.sh&quot;
+ssh -i $KEY $USER@$HOST &quot;sh $DIR/run.sh&quot;
 </command>
     </hudson.tasks.Shell>
   </builders>
