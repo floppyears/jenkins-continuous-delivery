@@ -65,13 +65,13 @@ DIR=&quot;/apis/apis/$NAME&quot;
 # TODO: copy configuration.yaml, run.sh, swagger.yaml, resource.properties, javadocs
 
 # delete old jar files
-ssh -i $KEY $USER@$HOST &quot;rm $DIR/*.jar&quot;
+ssh -i $API_HOST_KEY $API_HOST_USER@$API_HOST_NAME &quot;rm $DIR/*.jar&quot;
 
 # copy new jar file
-scp -i $KEY &quot;$ARCHIVE&quot; $USER@$HOST:$DIR
+scp -i $API_HOST_KEY &quot;$ARCHIVE&quot; $API_HOST_USER@$API_HOST_NAME:$DIR
 
 # run application
-ssh -i $KEY $USER@$HOST &quot;sh $DIR/run.sh&quot;
+ssh -i $API_HOST_KEY $API_HOST_USER@$API_HOST_NAME &quot;sh $DIR/run.sh&quot;
 </command>
     </hudson.tasks.Shell>
   </builders>
