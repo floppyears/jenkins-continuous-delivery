@@ -70,7 +70,7 @@ ssh -i $API_HOST_KEY $API_HOST_USER@$API_HOST_NAME &quot;rm $DIR/*.jar&quot;
 # copy new jar file
 scp -i $API_HOST_KEY &quot;$ARCHIVE&quot; $API_HOST_USER@$API_HOST_NAME:$DIR
 
-# run application
+# restart application
 ssh -i $API_HOST_KEY $API_HOST_USER@$API_HOST_NAME &quot;sh $DIR/run.sh&quot;
 </command>
     </hudson.tasks.Shell>
