@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>NAME</name>
+          <description></description>
+          <defaultValue>sample-api</defaultValue>
+        </hudson.model.StringParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+  </properties>
+  <scm class="hudson.scm.NullSCM"/>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <javaposse.jobdsl.plugin.ExecuteDslScripts plugin="job-dsl@1.39">
+      <scriptText>/* get build parameter */
+hudson.model.Build build = hudson.model.Executor.currentExecutor().currentExecutable
+hudson.model.ParametersAction parametersAction = build.getAction(hudson.model.ParametersAction)
+hudson.model.ParameterValue parameterValue = parametersAction.getParameter(&apos;NAME&apos;)
+String NAME = parameterValue.getValue()
+
+/* define variables */
+String ORGANIZATION = &apos;osu-mist&apos;
+
+/* create continuous integration job */
+job(NAME + &apos; continuous integration&apos;) {
+  jdk(&apos;Java 7&apos;)
+  scm {
+    github(ORGANIZATION+&apos;/&apos;+NAME, &apos;**&apos;)
+  }
+  triggers {
+    githubPush()
+  }
+  steps {
+    gradle {
+      useWrapper()
+      tasks(&apos;clean&apos;)
+      tasks(&apos;build&apos;)
+    }
+  }
+  publishers {
+    githubCommitNotifier()
+  }
+}</scriptText>
+      <usingScriptText>true</usingScriptText>
+      <ignoreExisting>false</ignoreExisting>
+      <removedJobAction>IGNORE</removedJobAction>
+      <removedViewAction>IGNORE</removedViewAction>
+      <lookupStrategy>JENKINS_ROOT</lookupStrategy>
+      <additionalClasspath></additionalClasspath>
+    </javaposse.jobdsl.plugin.ExecuteDslScripts>
+  </builders>
+  <publishers/>
+  <buildWrappers/>
+</project>
