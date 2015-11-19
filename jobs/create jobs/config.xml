@@ -51,6 +51,47 @@ job(NAME + &apos; continuous integration&apos;) {
   publishers {
     githubCommitNotifier()
   }
+}
+
+/* create continuous delivery job */
+job(NAME + &apos; continuous delivery&apos;) {
+  jdk(&apos;Java 7&apos;)
+  scm {
+    github(ORGANIZATION+&apos;/&apos;+NAME, &apos;refs/heads/master&apos;)
+  }
+  triggers {
+    githubPush()
+  }
+  steps {
+    gradle {
+      useWrapper()
+      tasks(&apos;clean&apos;)
+      tasks(&apos;build&apos;)
+    }
+    shell(&apos;&apos;&apos;#!/bin/sh
+#
+# environment variables to be defined:
+#
+# $API_HOST_NAME: hostname of api server (e.g., sub.domain.oregonstate.edu)
+# $API_HOST_USER: name of api server user (e.g., janedoe)
+# $API_HOST_KEY:  ssh private key (e.g., /path/to/.ssh/id_rsa)
+
+NAME=&apos;&apos;&apos;+NAME+&apos;&apos;&apos;
+
+ARCHIVE=`find &quot;$WORKSPACE/build/libs&quot; -name &quot;$NAME-*-*-all.jar&quot;`
+DIR=&quot;/apis/apis/$NAME&quot;
+
+# TODO: copy configuration.yaml, run.sh, swagger.yaml, resource.properties, javadocs
+
+# delete old jar files
+ssh -i $API_HOST_KEY $API_HOST_USER@$API_HOST_NAME &quot;rm $DIR/*.jar&quot;
+
+# copy new jar file
+scp -i $API_HOST_KEY &quot;$ARCHIVE&quot; $API_HOST_USER@$API_HOST_NAME:$DIR
+
+# restart application
+ssh -i $API_HOST_KEY $API_HOST_USER@$API_HOST_NAME &quot;sh $DIR/run.sh&quot;&apos;&apos;&apos;)
+  }
 }</scriptText>
       <usingScriptText>true</usingScriptText>
       <ignoreExisting>false</ignoreExisting>
