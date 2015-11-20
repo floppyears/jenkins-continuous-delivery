@@ -7,7 +7,7 @@ This repository contains the Jenkins configuration for automatically generating 
 
 Define environment variables and execute Jenkins:
 
-    export API_HOST_NAME=sub.domain.oregonstate.edu
-    export API_HOST_USER=janedoe
-    export API_HOST_KEY=/path/to/.ssh/id_rsa
-    java -jar ../jenkins.war &> /dev/null &
+    $ export API_HOST_NAME=sub.domain.oregonstate.edu
+    $ export API_HOST_USER=janedoe
+    $ export API_HOST_KEY=/path/to/.ssh/id_rsa
+    $ java -jar ../jenkins.war &> /dev/null &
